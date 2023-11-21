@@ -59,13 +59,13 @@ done
 
 ######################### Config ###########################
 
-RELEASE_VERSION='2023.Q3'
+RELEASE_VERSION='2023.Q4'
 ProductName="GLOBAL_MU_DATA"
 
 # Uses the location of the .sh file 
 # Modify this if you want to use 
 CurrentPath=$(pwd)
-ProjectPath="$CurrentPath/MelissaMatchUpObjectGlobalLinuxCpp"
+ProjectPath="$CurrentPath/MelissaMatchupObjectGlobalLinuxCpp"
 BuildPath="$ProjectPath/Build"
 DataPath="$ProjectPath/Data"
 
@@ -291,7 +291,7 @@ NewLibPath="LDLIBS = -L$ProjectPath/Build"
 sed -i -e "s|$LibPath|$NewLibPath|g" $ProjectPath/makefile
 
 # Generate the executable file
-cd MelissaMatchUpObjectGlobalLinuxCpp
+cd MelissaMatchupObjectGlobalLinuxCpp
 make &> /dev/null
 cd ..
 
@@ -301,11 +301,11 @@ export LD_LIBRARY_PATH=$BuildPath
 # Run Project
 if [ -z "$global" ] && [ -z "$us" ];
 then
-    cd MelissaMatchUpObjectGlobalLinuxCpp
-    $BuildPath/MelissaMatchUpObjectGlobalLinuxCpp --license $license --dataPath $DataPath
+    cd MelissaMatchupObjectGlobalLinuxCpp
+    $BuildPath/MelissaMatchupObjectGlobalLinuxCpp --license $license --dataPath $DataPath
     cd ..
 else
-    cd MelissaMatchUpObjectGlobalLinuxCpp
-    $BuildPath/MelissaMatchUpObjectGlobalLinuxCpp --license $license --dataPath $DataPath --global "$global" --us "$us"
+    cd MelissaMatchupObjectGlobalLinuxCpp
+    $BuildPath/MelissaMatchupObjectGlobalLinuxCpp --license $license --dataPath $DataPath --global "$global" --us "$us"
     cd ..
 fi

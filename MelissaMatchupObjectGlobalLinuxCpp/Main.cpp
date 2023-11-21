@@ -3,8 +3,8 @@
 #include <cstdlib>
 #include <list>
 
-#include "mdMatchUp.h"
-#include "MatchUpObjectGlobal.h"
+#include "mdMatchup.h"
+#include "MatchupObjectGlobal.h"
 #include "DataContainer.h"
 
 using namespace std;

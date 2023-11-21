@@ -6,7 +6,7 @@
 #include<stdexcept>
 #include<regex>
 
-#include "mdMatchUp.h"
+#include "mdMatchup.h"
 #include "DataContainer.h"
 
 using namespace std;
