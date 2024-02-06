@@ -3,7 +3,7 @@
 R = .
 CXX = g++
 CXXFLAGS = -Wall -Wextra -pedantic -std=c++17 -g -pthread -m64
-LDLIBS = -L/home/jessicasusilo/test/gitlab/linux/matchup/melissamatchupobjectgloballinuxcpp/MelissaMatchupObjectGlobalLinuxCpp/Build -Wl,--no-as-needed,-ldl,-rpath,$(DIR) -lmdMatchup -lmdGlobalParse
+LDLIBS = -L/home/emaiiii/MdLinuxExamples/MatchUpObjectGlobal-Cpp-Linux/MelissaMatchupObjectGlobalLinuxCpp/Build -Wl,--no-as-needed,-ldl,-rpath,$(DIR) -lmdMatchup -lmdGlobalParse
 RM = rm -f
 OUT_DIR = Build
 
