@@ -22,7 +22,7 @@ And return
 ## Tested Environments
 - Linux 64-bit g++ 9.4.0, Ubuntu 20.04.05 LTS
 - GNU Make 4.2.1
-- Melissa data files for 2024-Q1
+- Melissa data files for 2024-Q2
 
 ## Required Files and Programs
 
@@ -112,11 +112,11 @@ Melissa Updater is a CLI application allowing the user to update their Melissa a
 
 #### Different ways to get data file(s)
 1.  Using Melissa Updater
-	- It will handle all of the data download/path and .so file(s) for you. 
-2.  If you already have the latest zip, you can find the data file(s) and .so file(s) in there
-	- Use the location of where you copied/installed the data and update the "DataPath" variable in the bash script.
-    - Navigate into the `MelissaMatchupObjectGlobalLinuxCpp` project folder, create a folder named `Build`, and copy all the dll(s) mentioned above into the `Build` folder.
-	- Copy all the .so file(s) mentioned above into the `MelissaMatchupObjectGlobalLinuxCpp` project folder.
+    - It will handle all of the data download/path and .so file(s) for you. 
+2.  If you already have the latest release zip, you can find the data file(s) in there
+    - To pass in your own data file path directory, you may either use the '--dataPath' parameter or enter the data file path directly in interactive mode.
+    - Comment out this line "DownloadDataFiles $license" in the bash script.
+    - This will prevent you from having to redownload all the files.
 
 #### Change Bash Script Permissions
 To be able to run the bash script, you must first make it an executable using the command:
@@ -127,13 +127,14 @@ As an indicator, the filename will change colors once it becomes an executable.
 
 ## Run Bash Script
 Parameters:
-- -g or --global: a test global txt file
-- -u or --us: a test US txt file
+- --global: a test global txt file
+- --us: a test US txt file
 
   These are convenient when you want to get results for specific txt files in one run instead of testing multiple txt files in interactive mode.
 
-- -l or --license (optional): a license string to test the MatchUp Object Global
-- -q or --quiet (optional): add to command if you do not want to get any console output from the Melissa Updater
+- --dataPath (optional): a data file path directory to test the MatchUp Object Global
+- --license (optional): a license string to test the MatchUp Object Global
+- --quiet (optional): add to command if you do not want to get any console output from the Melissa Updater
 
   When you have modified the script to match your data location, let's run the script. There are two modes:
 - Interactive
@@ -165,6 +166,15 @@ Parameters:
 This is the expected outcome of a successful setup for interactive mode:
 
 ![alt text](/screenshots/output.png)
+
+## Troubleshooting
+Troubleshooting for errors found while running your program.
+
+### C# Errors:
+| Error      | Description |
+| ----------- | ----------- |
+| ErrorRequiredFileNotFound      | Program is missing a required file. Please check your Data folder and refer to the list of required files above. If you are unable to obtain all required files through the Melissa Updater, please contact technical support below. |
+| ErrorLicenseExpired   | Expired license string. Please contact technical support below. |
 
 ## Contact Us
 For free technical support, please call us at 800-MELISSA ext. 4 (800-635-4772 ext. 4) or email us at tech@melissa.com.
