@@ -22,7 +22,7 @@ And return
 ## Tested Environments
 - Linux 64-bit g++ 9.4.0, Ubuntu 20.04.05 LTS
 - GNU Make 4.2.1
-- Melissa data files for 2024-Q3
+- Melissa data files for 2024-Q4
 
 ## Required Files and Programs
 
@@ -83,8 +83,8 @@ Once you have finished the installations, you should be able to verify that they
 
 #### Download this project
 ```
-$ git clone https://github.com/MelissaData/MatchUpObjectGlobal-Cpp-Linux
-$ cd MatchUpObjectGlobal-Cpp-Linux
+git clone https://github.com/MelissaData/MatchUpObjectGlobal-Cpp-Linux
+cd MatchUpObjectGlobal-Cpp-Linux
 ```
 
 #### Set up Melissa Updater 
@@ -141,11 +141,11 @@ Parameters:
     
   The script will prompt the user for a global txt file and a US txt file, then use the provided txt files to test MatchUp Object Global.  For example:
   ```
-  $ ./MelissaMatchupObjectGlobalLinuxCpp.sh
+  ./MelissaMatchupObjectGlobalLinuxCpp.sh
   ```
   For quiet mode:
   ```
-  $ ./MelissaMatchupObjectGlobalLinuxCpp.sh --quiet
+  ./MelissaMatchupObjectGlobalLinuxCpp.sh --quiet
   ```
 
 - Command Line
@@ -154,13 +154,13 @@ Parameters:
 
   With all parameters:
   ```
-  $ ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt"
-  $ ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt" --license "<your_license_string>"
+  ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt"
+  ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt" --license "<your_license_string>"
   ```
   For quiet mode:
   ```
-  $ ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt" --quiet
-  $ ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt" --license "<your_license_string>" --quiet
+  ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt" --quiet
+  ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "MelissaMatchupGlobalSampleInput.txt" --us "MelissaMatchupUSSampleInput.txt" --license "<your_license_string>" --quiet
   ```
 
 This is the expected outcome of a successful setup for interactive mode:
