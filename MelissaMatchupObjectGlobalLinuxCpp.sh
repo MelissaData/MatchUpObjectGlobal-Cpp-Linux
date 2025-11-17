@@ -63,7 +63,7 @@ done
 
 ######################### Config ###########################
 
-RELEASE_VERSION='2025.Q3'
+RELEASE_VERSION='2025.Q4'
 ProductName="GLOBAL_MU_DATA"
 
 # Uses the location of the .sh file 
