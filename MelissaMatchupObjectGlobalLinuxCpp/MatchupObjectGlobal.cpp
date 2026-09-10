@@ -4,15 +4,19 @@ MatchUpObjectGlobal::MatchUpObjectGlobal(string license, string dataPath)
 {
   dataFilePath = dataPath;
 
-  // Set license string and set path to datafiles (.dat, etc)
+  // Set license string and set path to data files
   mdMatchUpObjGlobal->SetLicenseString(license.c_str());
   mdMatchUpObjGlobal->SetPathToMatchUpFiles(dataFilePath.c_str());
   mdMatchUpObjGlobal->SetKeyFile("temp.key");
   mdMatchUpObjGlobal->SetMatchcodeName("Global Address");
   mdMatchUpObjGlobal->SetMaximumCharacterSize(1);
 
+  // Load the data files. The returned ProgramStatus reports whether initialization succeeded.
+  // A non-ErrorNone status means initialization failed - commonly an invalid/expired license
+  // or missing/wrong-path data files. Until it reports "No Error" the object is not ready.
   mdMUReadWrite::ProgramStatus pStatus = mdMatchUpObjGlobal->InitializeDataFiles();
 
+  // If an issue occurred, please investigate the common causes.
   if (pStatus != mdMUReadWrite::ProgramStatus::ErrorNone)
   {
     cout << "Failed to Initialize Object." << endl;
@@ -20,7 +24,12 @@ MatchUpObjectGlobal::MatchUpObjectGlobal(string license, string dataPath)
     return;
   }
 
+  // Diagnostic information, handy for confirming the object loaded the data you expect:
+
+  // Build date of the data files
   cout << "                   DataBase Date: " + string(mdMatchUpObjGlobal->GetDatabaseDate()) << endl;
+
+  // When the license stops working
   cout << "                 Expiration Date: " + string(mdMatchUpObjGlobal->GetLicenseExpirationDate()) << endl;
 
   /**
@@ -30,7 +39,7 @@ MatchUpObjectGlobal::MatchUpObjectGlobal(string license, string dataPath)
   cout << "                  Object Version: " + string(mdMatchUpObjGlobal->GetBuildNumber()) << endl;
 }
 
-// This will call the Lookup function to process the inputs as well as generate the result codes
+// This will call the functions to process the input files as well as generate the result codes
 void MatchUpObjectGlobal::ExecuteObjectAndResultCodes(string inputFilePath, string outputFilePath)
 {
   ifstream inFile;
@@ -40,6 +49,7 @@ void MatchUpObjectGlobal::ExecuteObjectAndResultCodes(string inputFilePath, stri
 
   long total = 0, dupes = 0;
 
+  // Establish field mappings: when you change the matchcode, you will change these
   mdMatchUpObjGlobal->ClearMappings();
 
   if (mdMatchUpObjGlobal->AddMapping(mdMUReadWrite::Country) == 0 ||
@@ -52,11 +62,13 @@ void MatchUpObjectGlobal::ExecuteObjectAndResultCodes(string inputFilePath, stri
     exit(1);
   }
 
+  // Proccess the sample data file
   try
   {
     inFile.open(inputFilePath);
     outFile.open(outputFilePath);
 
+    // Skip the header row, then read each record.
     getline(inFile, record);
 
     while (getline(inFile, record))
@@ -88,10 +100,16 @@ void MatchUpObjectGlobal::ExecuteObjectAndResultCodes(string inputFilePath, stri
       mdMatchUpObjGlobal->WriteRecord();
     }
 
+    // All records are loaded; Process() runs the match/dedupe pass across them.
     mdMatchUpObjGlobal->Process();
 
+    // Write a header row, then read each processed record back and record its result
+    // codes, dupe group, and key. "MS03" in the results flags the record as a duplicate.
     outFile << "Id|ResultCodes|DupeGroup|Key" << endl;
 
+    // ResultsCodes explain any issues MatchUp Object Global has with the object.
+    // List of result codes for MatchUp Object Global
+    // https://docs.melissa.com/on-premise-api/matchup-object-global/result-codes.html
     while (mdMatchUpObjGlobal->ReadRecord() != 0)
     {
       string location = mdMatchUpObjGlobal->GetResults();
@@ -112,10 +130,6 @@ void MatchUpObjectGlobal::ExecuteObjectAndResultCodes(string inputFilePath, stri
   {
     cout << ex.what() << endl;
   }
-
-  // ResultsCodes explain any issues MatchUp Object Global has with the object.
-  // List of result codes for MatchUp Object Global
-  // https://wiki.melissadata.com/index.php?title=Result_Code_Details#MatchUp_Object
 }
 
 string MatchUpObjectGlobal::simplifyWhitespace(const string& input) {

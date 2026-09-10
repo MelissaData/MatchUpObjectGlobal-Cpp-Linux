@@ -1,7 +1,38 @@
 #!/bin/bash
 
-# Name:    MelissaMatchUpObjectGlobalLinuxCpp
-# Purpose: Use the MelissaUpdater to make the MelissaMatchUpObjectGlobalLinuxCpp code usable
+# MelissaMatchupObjectGlobalLinuxCpp
+#
+# Downloads the required components and then builds and runs MelissaMatchupObjectGlobalLinuxCpp.
+#
+# This script uses the Melissa Updater to fetch the data file(s), the shared object(s), and
+# the C++ headers, verifies the shared object(s) arrived, then builds the project
+# with make and runs it against the supplied input files.
+#
+# Overall flow:
+#   1. Read parameters / prompt for the license and data path.
+#   2. Download the data file(s) into the data folder, the shared object(s) into the Build
+#      folder, and the C++ headers into the project folder via the Melissa Updater.
+#   3. Confirm the shared object(s) are present (headers and data files are not checked).
+#   4. Build with make, then run it (supplied input files or interactive).
+#
+# Options:
+#   --global <value>    Global input file to dedupe.
+#   --us <value>        US input file to dedupe.
+#   --dataPath <value>  Path to an existing data files directory. If omitted, the script
+#                       prompts for a path; pressing Enter at that prompt skips it and
+#                       downloads the data files into the project's Data folder via the
+#                       Melissa Updater. A path that does not exist aborts the script.
+#   --license <value>   License string. Resolved in this order:
+#                         1. This option.
+#                         2. An interactive prompt, if the option was not supplied.
+#                         3. The MD_LICENSE environment variable, if the prompt was left blank.
+#                       Note that the environment variable is the last resort, not the first:
+#                       running without --license always prompts, even when MD_LICENSE is set.
+#   --quiet             Suppresses the Melissa Updater console output during downloads.
+#
+# Examples:
+#   ./MelissaMatchupObjectGlobalLinuxCpp.sh --license "your-license"
+#   ./MelissaMatchupObjectGlobalLinuxCpp.sh --global "Global_Input.txt" --us "US_Input.txt" --license "your-license"
 
 ######################### Constants ##########################
 
@@ -63,7 +94,8 @@ done
 
 ######################### Config ###########################
 
-RELEASE_VERSION='2026.Q2'
+# Product release the updater pulls files for
+RELEASE_VERSION='2026.Q3'
 ProductName="GLOBAL_MU_DATA"
 
 # Uses the location of the .sh file 
@@ -93,7 +125,7 @@ then
     exit 1
 fi
 
-# Config variables for download file(s)
+# Shared object(s) and headers needed to build and run the example
 Config1_FileName="libmdMatchup.so"
 Config1_ReleaseVersion=$RELEASE_VERSION
 Config1_OS="LINUX"
@@ -124,6 +156,7 @@ Config4_Type="INTERFACE"
 
 # ######################## Functions #########################
 
+# Download the product data file(s) into $DataPath via the Melissa Updater.
 DownloadDataFiles()
 {
     printf "============================== MELISSA UPDATER ============================\n"
@@ -139,6 +172,8 @@ DownloadDataFiles()
     printf "Melissa Updater finished downloading data file(s)!\n"
 }
 
+# Download the shared object(s) into the Build folder and the C++ headers into
+# the project folder.
 DownloadSO() 
 {
     printf "\nMELISSA UPDATER IS DOWNLOADING SO(S)...\n"
@@ -220,6 +255,7 @@ DownloadSO()
     fi
 }
 
+# Verify the expected shared object(s) landed in the Build folder
 CheckSOs() 
 {
     printf "\nDouble checking SO file(s) were downloaded...\n"
@@ -303,6 +339,7 @@ printf "\nAll file(s) have been downloaded/updated!\n"
 
 # Start program
 # Build project
+# Point the makefile's LDLIBS at the Build folder, then compile with make.
 printf "\n=============================== BUILD PROJECT =============================\n"
 
 # Setting the path to the lib in the makefile
@@ -320,6 +357,7 @@ cd ..
 export LD_LIBRARY_PATH=$BuildPath
 
 # Run Project
+# No input file supplied -> run interactively; otherwise pass the files in.
 if [ -z "$globalFile" ] && [ -z "$usFile" ];
 then
     cd MelissaMatchupObjectGlobalLinuxCpp

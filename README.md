@@ -5,7 +5,7 @@ This code showcases the Melissa MatchUp Object Global using C++.
 
 Please feel free to copy or embed this code to your own project. Happy coding!
 
-For the latest Melissa MatchUp Object Global release notes, please visit: https://releasenotes.melissa.com/on-premise-api/matchup-object-global/
+To view the latest Melissa MatchUp Object Global release notes or to subscribe to product notifications, please visit: https://releasenotes.melissa.com/on-premise-api/matchup-object-global/
 
 For further details, please visit: https://docs.melissa.com/on-premise-api/matchup-object-global/matchup-object-global-quickstart.html
 
@@ -22,7 +22,7 @@ And return
 ## Tested Environments
 - Linux 64-bit g++ 9.4.0, Ubuntu 20.04.05 LTS
 - GNU Make 4.2.1
-- Melissa data files for 2026-Q2
+- Melissa data files for 2026-Q3
 
 ## Required Files and Programs
 
@@ -33,7 +33,7 @@ This is the c++ code of the Melissa Object.
 - libmdGlobalParse.so
 
 #### Data File(s)
-- icudt52l.dat
+- icudt74l.dat
 - mdMatchup.dat
 - mdMatchup.mc
 - mdMatchup.sac
